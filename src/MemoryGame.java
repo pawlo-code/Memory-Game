@@ -68,7 +68,7 @@ public class MemoryGame {
 
     public void displayCurrentlyGame() {
         System.out.println("\n-----------------------------");
-        System.out.println("\t Level: soon");
+        System.out.println("\t Level: " + level);
         System.out.println("\t Guess chances: " + Integer.toString(roundCounter / 2));
         //creating grid of game
         for (int i = 0; i <= 2; i++) {

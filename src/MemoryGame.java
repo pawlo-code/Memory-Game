@@ -1,26 +1,29 @@
+import java.time.Instant;
 import java.util.*;
+import java.time.LocalDate;
+
 public class MemoryGame {
 
     private String[][] displayedArray;
-    private String[][] hidedArray;
+    private String[][] hiddenArray;
     private String[][] displayedArrayEasy = {{" ", "1", "2", "3", "4"},
-            {"A", "X", "X", "X", "X"},
-            {"B", "X", "X", "X", "X"},
+                                             {"A", "X", "X", "X", "X"},
+                                             {"B", "X", "X", "X", "X"},
     };
 
-    private String[][] hidedArrayEasy = {{" ", "1", "2", "3", "4"},
-            {"A", "X", "X", "X", "X"},
-            {"B", "X", "X", "X", "X"},
+    private String[][] hiddenArrayEasy = {{" ", "1", "2", "3", "4"},
+                                          {"A", "X", "X", "X", "X"},
+                                          {"B", "X", "X", "X", "X"},
     };
 
     private String[][] displayedArrayHard = {{" ", "1", "2", "3", "4", "5", "6", "7", "8"},
-            {"A", "X", "X", "X", "X", "X", "X", "X", "X"},
-            {"B", "X", "X", "X", "X", "X", "X", "X", "X"},
+                                             {"A", "X", "X", "X", "X", "X", "X", "X", "X"},
+                                             {"B", "X", "X", "X", "X", "X", "X", "X", "X"},
     };
 
-    private String[][] hidedArrayHard = {{" ", "1", "2", "3", "4", "5", "6", "7", "8"},
-            {"A", "X", "X", "X", "X", "X", "X", "X", "X"},
-            {"B", "X", "X", "X", "X", "X", "X", "X", "X"},
+    private String[][] hiddenArrayHard = {{" ", "1", "2", "3", "4", "5", "6", "7", "8"},
+                                          {"A", "X", "X", "X", "X", "X", "X", "X", "X"},
+                                          {"B", "X", "X", "X", "X", "X", "X", "X", "X"},
     };
 
     private int lastCoordinates[] = {0, 0};
@@ -32,37 +35,41 @@ public class MemoryGame {
     private String level;
     private ArrayList<String> arrayFromFile;
     private int roundCounter;
-
+    private long timeInSeconds;
     public MemoryGame(ArrayList<String> arrayFromFile, String level) {
         this.arrayFromFile = arrayFromFile;
         this.level = level;
+        getCurrentTime();
 
         if (level.equals("EASY")) {
             displayedArray = displayedArrayEasy;
-            hidedArray = hidedArrayEasy;
+            hiddenArray = hiddenArrayEasy;
             roundCounter = 10 * 2;
         } else if (level.equals("HARD")) {
             displayedArray = displayedArrayHard;
-            hidedArray = hidedArrayHard;
+            hiddenArray = hiddenArrayHard;
             roundCounter = 15 * 2;
         }
 
         setRandomlyHidedArray();
     }
-
+    private void getCurrentTime(){
+        Instant currentInstant = Instant.now();
+        timeInSeconds = currentInstant.getEpochSecond();
+    }
     private void setRandomlyHidedArray() {
 
         //Set hided first row to random words
-        for (int i = 1; i < hidedArray[1].length; i++) {
-            hidedArray[1][i] = arrayFromFile.get(i - 1);
+        for (int i = 1; i < hiddenArray[1].length; i++) {
+            hiddenArray[1][i] = arrayFromFile.get(i - 1);
         }
 
         //Shuffle array from file
         Collections.shuffle(arrayFromFile);
 
         //Set hided second row to random words
-        for (int i = 1; i < hidedArray[2].length; i++) {
-            hidedArray[2][i] = arrayFromFile.get(i - 1);
+        for (int i = 1; i < hiddenArray[2].length; i++) {
+            hiddenArray[2][i] = arrayFromFile.get(i - 1);
         }
     }
 
@@ -93,12 +100,11 @@ public class MemoryGame {
         int secondIndex = Integer.parseInt(answer.substring(1, 2));
 
         if (answer.charAt(0) == 'A') {
-            firstIndex++;
+            firstIndex = 1;
         } else if (answer.charAt(0) == 'B') {
-            firstIndex++;
-            firstIndex++;
+            firstIndex = 2;
         }
-        displayedArray[firstIndex][secondIndex] = hidedArray[firstIndex][secondIndex];
+        displayedArray[firstIndex][secondIndex] = hiddenArray[firstIndex][secondIndex];
         checkAnswer(firstIndex, secondIndex);
 
     }
@@ -124,19 +130,36 @@ public class MemoryGame {
             }
         }
     }
-
-    public enum WinOrLose {
-        WIN, LOSE, NOTHING
-    }
-
     public WinOrLose checkIfWinOrLose() {
         if (roundCounter == 0) {
-            displayedArray = hidedArray;
+            displayedArray = hiddenArray;
             return WinOrLose.LOSE;
         } else if (Arrays.toString(displayedArray[2]).contains("X") == false) {
             return WinOrLose.WIN;
         } else {
             return WinOrLose.NOTHING;
         }
+    }
+
+    public void checkResult(){
+        System.out.println("YOUR RESULTS!");
+        if(level.equals("EASY"))
+        {
+            System.out.println("It takes you: "+ Integer.toString(10-roundCounter/2) + " rounds!");
+        } else {
+            System.out.println("It takes you: "+ Integer.toString(15-roundCounter/2) + " rounds!");
+        }
+
+        Instant currentInstant = Instant.now();
+        long getSeconds = currentInstant.getEpochSecond() - timeInSeconds;
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("It takeS " + Long.toString(getSeconds) + " seconds! Nice one!");
+        System.out.println("Write your name to save your results in Leaderboard!");
+
+        String name = scanner.nextLine();
+
+        Leaderboard.fileWriterMethod(name+ " | Date: " + LocalDate.now() +  " | "+ "Time: " + getSeconds + "| Tries: " + Integer.toString(10-roundCounter/2));
+        Leaderboard.fileReaderMethod();
     }
 }

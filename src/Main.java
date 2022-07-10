@@ -34,19 +34,20 @@ public class Main {
 
                 while(shouldContinueGame) {
 
-                    if(game.checkIfWinOrLose().equals(MemoryGame.WinOrLose.WIN)){
+                    if(game.checkIfWinOrLose().equals(WinOrLose.WIN)){
                         System.out.println("YOU WON! CONGRATULATIONS!");
+                        game.checkResult();
                         break;
-                    } else if (game.checkIfWinOrLose().equals(MemoryGame.WinOrLose.LOSE)){
+                    } else if (game.checkIfWinOrLose().equals(WinOrLose.LOSE)){
                         System.out.println("You don't have more chances. You lose. :(");
                         break;
                     }
 
                     String selection = scanner.nextLine();
-                    if(Arrays.asList(answersLvlEasy).contains(selection) == false && level.equals("easy")) {
+                    if(Arrays.asList(answersLvlEasy).contains(selection) == false) {
                         System.out.println("You selection is wrong! Try again.");
                         continue;
-                    } else if (Arrays.asList(answersLvlHard).contains(selection) == false && level.equals("hard")){
+                    } else if (Arrays.asList(answersLvlHard).contains(selection) == false){
                         System.out.println("You selection is wrong! Try again.");
                         continue;
                     }

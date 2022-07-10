@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="333f9f14-ff44-4b45-9bcb-5ec62820e4e7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Leaderboard.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Readme.MD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Leaderboard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/WinOrLose.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MemoryGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MemoryGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ReadFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/File.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +18,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>

@@ -40,11 +40,11 @@ public class MemoryGame {
         if (level.equals("easy")) {
             displayedArray = displayedArrayEasy;
             hidedArray = hidedArrayEasy;
-            roundCounter = 10;
+            roundCounter = 10*2;
         } else if (level.equals("hard")) {
             displayedArray = displayedArrayHard;
             hidedArray = hidedArrayHard;
-            roundCounter = 15;
+            roundCounter = 15*2;
         }
 
         setRandomlyHidedArray();
@@ -69,7 +69,7 @@ public class MemoryGame {
     public void displayCurrentlyGame() {
         System.out.println("\n-----------------------------");
         System.out.println("\t Level: soon");
-        System.out.println("\t Guess chances: " + Integer.toString(roundCounter));
+        System.out.println("\t Guess chances: " + Integer.toString(roundCounter/2));
         //creating grid of game
         for (int i = 0; i <= 2; i++) {
             System.out.println("\n");

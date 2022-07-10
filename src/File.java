@@ -1,16 +1,15 @@
-import java.io.*;
 import java.util.*;
 
-public class ReadFile {
+public class File {
     private ArrayList<String> wordsList = new ArrayList<String>();
 
-    public ReadFile() {
-        fileOpener();
+    public File() {
+        readWholeFile();
     }
 
-    private void fileOpener(){
+    private void readWholeFile(){
         try {
-            File file = new File("Words.txt");
+            java.io.File file = new java.io.File("Words.txt");
             Scanner scanner = new Scanner(file);
             while(scanner.hasNext()){
                 String line = scanner.nextLine();
@@ -26,15 +25,7 @@ public class ReadFile {
         for (int i = 0; i < count; i++){
             //creating pseudo random number
             int randomNumber = (int) (Math.random()*100);
-            if(randomNumber >= wordsList.size()){
-                i--;
-            } else if(wordsList.size() < 8){
-                System.out.println("File Words.txt is nearly empty. Stopping the game.");
-                System.exit(0);
-            } else {
-                randomWords.add(wordsList.get(randomNumber));
-                wordsList.remove(randomNumber);
-            }
+            randomWords.add(wordsList.get(randomNumber));
         }
         return randomWords;
     }

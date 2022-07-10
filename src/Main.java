@@ -1,5 +1,5 @@
 import java.util.*;
-import java.io.*;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -9,7 +9,7 @@ public class Main {
                                          "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8"};
         int numberWords = 4;
 
-        ReadFile file = new ReadFile();
+        File file = new File();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -17,35 +17,36 @@ public class Main {
             do {
                 System.out.println("\tMEMORY GAME");
                 System.out.println("\tSelect difficulty level: easy/hard");
-                String level = scanner.nextLine();
+                String level = scanner.nextLine().toUpperCase();
 
-                if(level.equals("easy")){
-                    numberWords = 4;
 
-                } else if (level.equals("hard")) {
-                    numberWords = 8;
-                } else {
-                    System.out.println("Wrong selection.. Try again!");
-                    continue;
+                switch(level){
+                    case "EASY" -> numberWords = 4;
+                    case "HARD" -> numberWords = 8;
+                    default -> {
+                        System.out.println("Wrong selection.. Try again!");
+                        continue;
+                    }
                 }
+
                 MemoryGame game = new MemoryGame(file.getRandomWords(numberWords), level);
                 game.displayCurrentlyGame();
 
                 while(shouldContinueGame) {
 
-                    if(game.checkIfWinOrLose().equals("win")){
+                    if(game.checkIfWinOrLose().equals(MemoryGame.WinOrLose.WIN)){
                         System.out.println("YOU WON! CONGRATULATIONS!");
                         break;
-                    } else if (game.checkIfWinOrLose().equals("lose")){
+                    } else if (game.checkIfWinOrLose().equals(MemoryGame.WinOrLose.LOSE)){
                         System.out.println("You don't have more chances. You lose. :(");
                         break;
                     }
 
                     String selection = scanner.nextLine();
-                    if(Arrays.toString(answersLvlEasy).contains(selection) == false && level.equals("easy")) {
+                    if(Arrays.asList(answersLvlEasy).contains(selection) == false && level.equals("easy")) {
                         System.out.println("You selection is wrong! Try again.");
                         continue;
-                    } else if (Arrays.toString(answersLvlHard).contains(selection) == false && level.equals("hard")){
+                    } else if (Arrays.asList(answersLvlHard).contains(selection) == false && level.equals("hard")){
                         System.out.println("You selection is wrong! Try again.");
                         continue;
                     }

@@ -37,14 +37,14 @@ public class MemoryGame {
         this.arrayFromFile = arrayFromFile;
         this.level = level;
 
-        if (level.equals("easy")) {
+        if (level.equals("EASY")) {
             displayedArray = displayedArrayEasy;
             hidedArray = hidedArrayEasy;
-            roundCounter = 10*2;
-        } else if (level.equals("hard")) {
+            roundCounter = 10 * 2;
+        } else if (level.equals("HARD")) {
             displayedArray = displayedArrayHard;
             hidedArray = hidedArrayHard;
-            roundCounter = 15*2;
+            roundCounter = 15 * 2;
         }
 
         setRandomlyHidedArray();
@@ -69,7 +69,7 @@ public class MemoryGame {
     public void displayCurrentlyGame() {
         System.out.println("\n-----------------------------");
         System.out.println("\t Level: soon");
-        System.out.println("\t Guess chances: " + Integer.toString(roundCounter/2));
+        System.out.println("\t Guess chances: " + Integer.toString(roundCounter / 2));
         //creating grid of game
         for (int i = 0; i <= 2; i++) {
             System.out.println("\n");
@@ -89,72 +89,18 @@ public class MemoryGame {
     public void checkGameStatus(String answer) {
         roundCounter--;
         checkIfWinOrLose();
-        switch (answer) {
-            case "A1" -> {
-                displayedArray[1][1] = hidedArray[1][1];
-                checkAnswer(1, 1);
-            }
-            case "A2" -> {
-                displayedArray[1][2] = hidedArray[1][2];
-                checkAnswer(1, 2);
-            }
-            case "A3" -> {
-                displayedArray[1][3] = hidedArray[1][3];
-                checkAnswer(1, 3);
-            }
-            case "A4" -> {
-                displayedArray[1][4] = hidedArray[1][4];
-                checkAnswer(1, 4);
-            }
-            case "A5" -> {
-                displayedArray[1][5] = hidedArray[1][5];
-                checkAnswer(1, 5);
-            }
-            case "A6" -> {
-                displayedArray[1][6] = hidedArray[1][6];
-                checkAnswer(1, 6);
-            }
-            case "A7" -> {
-                displayedArray[1][7] = hidedArray[1][7];
-                checkAnswer(1, 7);
-            }
-            case "A8" -> {
-                displayedArray[1][8] = hidedArray[1][8];
-                checkAnswer(1, 8);
-            }
-            case "B1" -> {
-                displayedArray[2][1] = hidedArray[2][1];
-                checkAnswer(2, 1);
-            }
-            case "B2" -> {
-                displayedArray[2][2] = hidedArray[2][2];
-                checkAnswer(2, 2);
-            }
-            case "B3" -> {
-                displayedArray[2][3] = hidedArray[2][3];
-                checkAnswer(2, 3);
-            }
-            case "B4" -> {
-                displayedArray[2][4] = hidedArray[2][4];
-                checkAnswer(2, 4);
-            }
-            case "B5" -> {
-                displayedArray[2][5] = hidedArray[2][5];
-                checkAnswer(2, 5);
-            }
-            case "B6" -> {
-                displayedArray[2][6] = hidedArray[2][6];
-                checkAnswer(2, 6);
-            }
-            case "B7" -> {
-                displayedArray[2][7] = hidedArray[2][7];
-                checkAnswer(2, 7);
-            }
-            case "B8" -> {
-                displayedArray[2][8] = hidedArray[2][8];
-                checkAnswer(2, 8);
-            }
+        int firstIndex = 0;
+        int secondIndex = Integer.parseInt(answer.substring(1, 2));
+
+        if (answer.charAt(0) == 'A') {
+            firstIndex++;
+        } else if (answer.charAt(0) == 'B') {
+            firstIndex++;
+            firstIndex++;
         }
+        displayedArray[firstIndex][secondIndex] = hidedArray[firstIndex][secondIndex];
+        checkAnswer(firstIndex, secondIndex);
+
     }
 
     private void checkAnswer(int row, int column) {
@@ -179,19 +125,18 @@ public class MemoryGame {
         }
     }
 
-    public String checkIfWinOrLose() {
-        String returnMassage = "";
-        if (roundCounter == 0) {
-            returnMassage = "lose";
-            displayedArray = hidedArray;
-        } else {
-            if (Arrays.toString(displayedArray[2]).contains("X")) {
-            } else {
-                returnMassage = "win";
-            }
-        }
-        return returnMassage;
+    public enum WinOrLose {
+        WIN, LOSE, NOTHING
     }
 
-
+    public WinOrLose checkIfWinOrLose() {
+        if (roundCounter == 0) {
+            displayedArray = hidedArray;
+            return WinOrLose.LOSE;
+        } else if (Arrays.toString(displayedArray[2]).contains("X") == false) {
+            return WinOrLose.WIN;
+        } else {
+            return WinOrLose.NOTHING;
+        }
+    }
 }

@@ -26,8 +26,15 @@ public class ReadFile {
         for (int i = 0; i < count; i++){
             //creating pseudo random number
             int randomNumber = (int) (Math.random()*100);
-            randomWords.add(wordsList.get(randomNumber));
-            wordsList.remove(randomNumber);
+            if(randomNumber >= wordsList.size()){
+                i--;
+            } else if(wordsList.size() < 8){
+                System.out.println("File Words.txt is nearly empty. Stopping the game.");
+                System.exit(0);
+            } else {
+                randomWords.add(wordsList.get(randomNumber));
+                wordsList.remove(randomNumber);
+            }
         }
         return randomWords;
     }
